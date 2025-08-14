@@ -9,7 +9,7 @@
 ## Grupo/Kit X
 
 1. Arthur Borba
-2. Arthur Napoles
+2. Arthur Napoles test
 3. Enrico Comasseto Di Gioia
 4. Enzo godoy
 5. Rafael Lucena
