@@ -16,3 +16,4 @@ pandas
 yfinance
 opendatasets
 seaborn
+scikit-learn
