@@ -1,67 +1,41 @@
-# Projeto Integrador: Predição da Nacionalidade de Pilotos de Fórmula 1
+# # 🏎️ Análise de Drivers da Fórmula 1 (1950-2020)
 
-Este projeto utiliza o dataset `drivers.csv` da Fórmula 1 (1950–2020) para prever a nacionalidade dos pilotos utilizando **Decision Tree**. Todas as etapas estão documentadas com visualizações e resultados.
+import kagglehub
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import os
 
----
+# ## 🔽 Download do dataset
+path = kagglehub.dataset_download("rohanrao/formula-1-world-championship-1950-2020")
+print("📂 Arquivos baixados em:", path)
 
-## 1. Exploração dos Dados
-- **Objetivo:** Analisar o dataset e entender a natureza das variáveis.
-- **Visualizações geradas:**
-  - Histogramas das colunas numéricas  
-  ![Histograma](images/histograma.png)
-  - Contagem de pilotos por nacionalidade  
-  ![Barras Nacionalidade](images/bar_nacionalidade.png)
+# ## 📂 Leitura do arquivo
+file_path = os.path.join(path, "drivers.csv")
+df = pd.read_csv(file_path)
 
----
+# ## ℹ️ Informações do dataset
+print("📌 Dimensão do dataset:", df.shape)
+print("\n📌 Tipos de variáveis:\n", df.dtypes)
+print("\n📌 Resumo estatístico:\n", df.describe(include="all"))
+print("\n📌 Valores nulos por coluna:\n", df.isnull().sum())
 
-## 2. Pré-processamento
-- **Objetivo:** Limpeza, tratamento de valores ausentes e normalização.
-- **Visualizações geradas:**
-  - Comparação antes/depois da normalização  
-  ![Normalização](images/normalizacao.png)
+# ## 📊 Distribuição das variáveis numéricas
+df.hist(bins=20, figsize=(12, 8))
+plt.suptitle("Distribuição das Variáveis Numéricas", fontsize=16)
+plt.show()
 
----
+# ## 🔗 Matriz de Correlação
+if len(df.select_dtypes(include="number").columns) > 1:
+    plt.figure(figsize=(10,6))
+    sns.heatmap(df.corr(), annot=True, cmap="coolwarm", fmt=".2f")
+    plt.title("Matriz de Correlação", fontsize=14)
+    plt.show()
 
-## 3. Divisão dos Dados
-- **Objetivo:** Separar treino e teste mantendo a distribuição das classes
-- **Visualizações geradas:**
-  - Distribuição das classes em treino e teste  
-  ![Distribuição Treino/Teste](images/distribuicao_treino_teste.png)
-
----
-
-## 4. Treinamento do Modelo
-- **Objetivo:** Treinar Decision Tree para classificação
-- **Visualizações geradas:**
-  - Árvore de decisão plotada  
-  ![Árvore de Decisão](images/arvore_decisao.png)
-
----
-
-## 5. Avaliação do Modelo
-- **Métricas obtidas:**  
-  - Acurácia: 82%  
-  - Precision média: 0.80  
-  - Recall média: 0.81  
-  - F1-score média: 0.80  
-
-- **Visualizações geradas:**  
-  - Matriz de confusão (heatmap)  
-  ![Matriz de Confusão](images/matriz_confusao.png)
-
----
-
-## 6. Relatório Final
-- **Conclusões:**  
-  - Classes mais frequentes tiveram melhor desempenho  
-  - Classes raras apresentaram mais erros  
-- **Possíveis melhorias:**  
-  1. Usar Random Forest  
-  2. Engenharia de features (idade, experiência)  
-  3. Balanceamento de classes  
-  4. Ajuste de hiperparâmetros  
-  5. Validação cruzada
-
----
-
-**Observação:** Salve os gráficos gerados pelos scripts em `images/` com os nomes indicados para que os links funcionem automaticamente.
+# ## 📈 Distribuição das variáveis categóricas
+for col in df.select_dtypes(include="object").columns:
+    plt.figure(figsize=(8,4))
+    sns.countplot(data=df, x=col, palette="viridis")
+    plt.title(f"Distribuição da variável {col}")
+    plt.xticks(rotation=45)
+    plt.show()

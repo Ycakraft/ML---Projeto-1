@@ -11,7 +11,7 @@ python -m venv env
 Ative o ambiente virtual (**você deve fazer isso sempre que for executar algum script deste repositório**):
 
 ``` shell
-source ./env/bin/activate
+ .\env\Scripts\activate
 ```
 
 Instale as dependências com:
