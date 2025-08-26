@@ -14,3 +14,5 @@ matplotlib
 numpy
 pandas
 yfinance
+opendatasets
+seaborn

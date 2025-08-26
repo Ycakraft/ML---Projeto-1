@@ -7,17 +7,17 @@ import os
 
 
 path = kagglehub.dataset_download("rohanrao/formula-1-world-championship-1950-2020")
-print("📂 Arquivos baixados em:", path)
+print(" Arquivos baixados em:", path)
 
 
 file_path = os.path.join(path, "drivers.csv")
 df = pd.read_csv(file_path)
 
 
-print("📌 Dimensão do dataset:", df.shape)
-print("\n📌 Tipos de variáveis:\n", df.dtypes)
-print("\n📌 Resumo estatístico:\n", df.describe(include="all"))
-print("\n📌 Valores nulos por coluna:\n", df.isnull().sum())
+print(" Dimensão do dataset:", df.shape)
+print("\n Tipos de variáveis:\n", df.dtypes)
+print("\n Resumo estatístico:\n", df.describe(include="all"))
+print("\n Valores nulos por coluna:\n", df.isnull().sum())
 
 
 df.hist(bins=20, figsize=(12, 8))

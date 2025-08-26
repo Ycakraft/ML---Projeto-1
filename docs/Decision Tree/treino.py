@@ -1,7 +1,4 @@
-# ============================
-# Pré-requisitos
-# ============================
-# pip install pandas matplotlib seaborn scikit-learn opendatasets
+
 
 import opendatasets as od
 import pandas as pd
@@ -23,10 +20,10 @@ csv_path = "formula-1-world-championship-1950-2020/drivers.csv"
 df = pd.read_csv(csv_path)
 
 
-print("📌 Dimensão do dataset:", df.shape)
-print("\n📌 Tipos de variáveis:\n", df.dtypes)
-print("\n📌 Valores nulos por coluna:\n", df.isnull().sum())
-print("\n📌 Estatísticas gerais:\n", df.describe(include="all"))
+print(" Dimensão do dataset:", df.shape)
+print("\n Tipos de variáveis:\n", df.dtypes)
+print("\n Valores nulos por coluna:\n", df.isnull().sum())
+print("\n Estatísticas gerais:\n", df.describe(include="all"))
 
 
 num_cols = df.select_dtypes(include=["int64","float64"]).columns
@@ -74,12 +71,12 @@ y_pred = clf.predict(X_test)
 
 
 accuracy = accuracy_score(y_test, y_pred)
-print(f"📌 Acurácia do modelo: {accuracy:.2f}")
+print(f" Acurácia do modelo: {accuracy:.2f}")
 
-print("\n📌 Relatório de Classificação:")
+print("\n Relatório de Classificação:")
 print(classification_report(y_test, y_pred))
 
-print("\n📌 Matriz de Confusão:")
+print("\n Matriz de Confusão:")
 print(confusion_matrix(y_test, y_pred))
 
 
