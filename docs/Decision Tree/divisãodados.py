@@ -1,7 +1,4 @@
-# ============================
-# Pré-requisitos
-# ============================
-# pip install pandas matplotlib seaborn scikit-learn opendatasets
+
 
 import opendatasets as od
 import pandas as pd
