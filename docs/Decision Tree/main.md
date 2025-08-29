@@ -98,9 +98,9 @@ A árvore foi exportada em **SVG**, pronta para inclusão em relatórios ou docu
 
 ## 7. Conclusão
 O projeto demonstrou o processo completo de **pré-processamento, modelagem e visualização** de dados usando Python e ferramentas de ciência de dados. A árvore de decisão fornece insights visuais sobre como características dos pilotos influenciam na nacionalidade, sendo útil tanto para análise exploratória quanto para classificações automáticas.
-```python exec="on" html="1"
---8<-- ".\docs\Decision Tree\Exploraçãodados.py"
-```
+
+![Logo do Projeto](Figure_1.png)
+
 
 ```python exec="on" html="1"
 --8<-- ".\docs\Decision Tree\avaliação.py"
