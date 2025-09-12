@@ -52,6 +52,7 @@ import re
 
 import logging
 import markdown
+import markdown.blockprocessors
 import xml.etree.ElementTree as etree
 from unicodedata import east_asian_width
 
@@ -61,11 +62,23 @@ logger = logging.getLogger('markdown-grid-tables')
 
 
 class GridTableExtension(markdown.Extension):
+
+    def __init__(self, *args, **kwargs):
+        self.config = {
+            'hard_linebreaks': [
+                True,
+                'Newlines breaks in table cells produce hard line breaks - Default: True'
+            ]
+        }
+        super().__init__(*args, **kwargs)
+
     def extendMarkdown(self, md, **kwargs): # , md_globals):
         blockprocessors = md.parser.blockprocessors
         try:
+            processor = GridTableProcessor(md.parser)
+            processor.hard_linebreaks = bool(self.getConfigs()['hard_linebreaks'])
             # Use a priority of 65 to be processed before the `hashheader` extension.
-            blockprocessors.register(GridTableProcessor(md.parser), 'grid-table', 65)
+            blockprocessors.register(processor, 'grid-table', 65)
         except AttributeError:
             # Try using `.add` for compatibility with older versions of the Markdown package.
             blockprocessors.add('grid-table', GridTableProcessor(md.parser), '<hashheader')
@@ -440,6 +453,12 @@ class GridTable:
 
 class GridTableProcessor(markdown.blockprocessors.BlockProcessor):
     """
+    Whether this processor should produced hard linebreaks on newlines in a
+    table cell.
+    """
+    hard_linebreaks: bool = True
+
+    """
     The markdown block processor used to parse a grid table. A malformed grid
     table is generated as a block of text instead of being removed.
     """
@@ -722,7 +741,10 @@ class GridTableProcessor(markdown.blockprocessors.BlockProcessor):
         text = []
         for i in range(start_row+1, end_row):
             text.append(block[i][start_col+1:end_col].replace(self._double_width_pad_char, '').rstrip())
-        return '  \n'.join(self._unindent_one_level(text))
+        if self.hard_linebreaks:
+            return '  \n'.join(self._unindent_one_level(text))
+        else:
+            return '\n'.join(self._unindent_one_level(text))
 
     def _unindent_one_level(self, text):
         """
