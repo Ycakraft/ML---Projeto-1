@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
-from divisao_dados import X_train, X_test, y_train, y_test
+from docs.knn.divisao_dados import X_train, X_test, y_train, y_test # pyright: ignore[reportMissingImports]
 
 print("\n=== TREINAMENTO DO MODELO KNN ===\n")
 

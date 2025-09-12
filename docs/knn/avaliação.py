@@ -6,7 +6,7 @@ import seaborn as sns
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.neighbors import KNeighborsClassifier
 
-from divisao_dados import X_test, y_test, X_train, y_train
+from docs.knn.divisao_dados import X_test, y_test, X_train, y_train # pyright: ignore[reportMissingImports]
 from treino import knn
 
 print("\n=== AVALIAÇÃO DO MODELO ===\n")
