@@ -1,26 +1,33 @@
-import pandas as pd
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 df = pd.read_csv("drivers.csv")
 
-df = df.loc[:, ~df.columns.duplicated()]
+print("\n=== PRÉ-PROCESSAMENTO ===\n")
 
-for col in df.columns:
-    if df[col].dtype in ["int64", "float64"]:
-        df[col] = df[col].fillna(df[col].mean())
-    else:
-        df[col] = df[col].fillna(df[col].mode()[0])
+# Verificando valores ausentes
+print("Valores ausentes por coluna:")
+print(df.isnull().sum())
 
+# Como não há valores ausentes, não é necessário tratamento
+print("Não há valores ausentes no dataset.")
 
-num_cols = df.select_dtypes(include=["int64", "float64"]).columns
+# Codificando a variável target (já está codificada como 0, 1, 2)
+# Para fins demonstrativos, vamos garantir que está correta
+le = LabelEncoder()
+df['target_encoded'] = le.fit_transform(df['species'])
+print("\nVerificação da codificação da target:")
+print(df[['species', 'target', 'target_encoded']].head())
 
+# Normalização dos dados
+scaler = StandardScaler()
+X = df.iloc[:, :4]  # Features
+y = df['target_encoded']  # Target
 
-scaler_minmax = MinMaxScaler()
-df[num_cols] = scaler_minmax.fit_transform(df[num_cols])
+X_scaled = scaler.fit_transform(X)
+print("\nDados antes da normalização (primeiras 5 linhas):")
+print(X.head())
 
-
-print(" Dataset após pré-processamento:")
-print(df.head())
-print("\n Valores nulos após tratamento:\n", df.isnull().sum())
-print("\n Estatísticas descritivas:\n", df.describe(include="all"))
+print("\nDados após normalização (primeiras 5 linhas):")
+print(pd.DataFrame(X_scaled, columns=X.columns).head())
