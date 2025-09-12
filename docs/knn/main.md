@@ -1,107 +1,67 @@
-# Relatório Final – Análise e Modelo de Árvores de Decisão na Base F1
+#  Relatório Final – Classificação KNN
 
-## 1. Introdução
-O objetivo deste projeto foi construir um modelo de **árvore de decisão** capaz de classificar a nacionalidade de pilotos da Fórmula 1 com base em suas estatísticas de desempenho. Utilizamos dados históricos da base `drivers.csv`, disponível no Kaggle (1950-2020), e aplicamos técnicas de pré-processamento, normalização e modelagem supervisionada.
+##  Objetivo
+O modelo **KNN (k-Nearest Neighbors)** foi utilizado para classificar o **nível de risco (risk_level)** com base em duas variáveis preditoras:  
+- **Idade (age)** – normalizada  
+- **Anos de experiência (experience_years)** – normalizada  
 
----
-
-## 2. Tecnologias Utilizadas
-- **Python 3.11** – linguagem principal para manipulação de dados e modelagem.  
-- **Pandas** – carregamento e manipulação do dataset.  
-- **scikit-learn** – construção do modelo de árvore de decisão, pré-processamento e divisão dos dados.  
-- **Matplotlib** – visualização da árvore de decisão.  
-- **OpenDatasets** – download do dataset diretamente do Kaggle.  
+O objetivo foi analisar a capacidade do KNN em distinguir entre três classes de risco:  
+- **High (Alto risco)** – vermelho  
+- **Low (Baixo risco)** – verde  
+- **Medium (Risco médio)** – azul  
 
 ---
 
-## 3. Etapas do Processo
-
-### 3.1 Aquisição do Dataset
-O dataset foi obtido do Kaggle por meio da URL:  
-[Formula 1 World Championship 1950-2020](https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020)  
-
-O arquivo utilizado foi `drivers.csv`, contendo informações de pilotos, temporadas, vitórias, poles, pontos e nacionalidades.
-
----
-
-### 3.2 Pré-processamento
-
-**Tratamento de valores ausentes:**  
-- Colunas numéricas preenchidas com a média.  
-- Colunas categóricas preenchidas com a moda.  
-
-**Normalização:**  
-- Todas as colunas numéricas normalizadas para o intervalo [0,1] usando `MinMaxScaler`.  
-
-**Filtragem de nacionalidades:**  
-- Apenas nacionalidades com pelo menos 2 pilotos foram consideradas.
+## Conjunto de Dados
+- **Total de amostras:** 1000  
+- **Número de classes:** 3 (`High`, `Low`, `Medium`)  
+- **Pré-processamento:**  
+  - Normalização aplicada para manter as features na mesma escala.  
+  - Amostras balanceadas entre as três categorias (visualmente).  
 
 ---
 
-### 3.3 Preparação de Features e Target
-- **Features (X):** todas as colunas numéricas e categóricas transformadas em variáveis dummy (`get_dummies`).  
-- **Target (y):** coluna `nationality`.  
+##  Resultados do Modelo
+### Fronteiras de decisão
+O gráfico mostra as **regiões de decisão do KNN** no espaço bidimensional (`age` vs `experience_years`):
+- O plano foi dividido em áreas coloridas que representam a classe prevista pelo KNN.  
+- Cada ponto representa uma amostra real do dataset, colorida conforme sua classe verdadeira.  
+
+### Observações
+1. **Classe predominante:** A região verde (baixo risco) ocupa a maior parte do espaço, sugerindo que o modelo frequentemente classifica amostras como "Low".  
+2. **Sobreposição de classes:**  
+   - As regiões azul (Medium) e vermelha (High) aparecem de forma fragmentada, indicando **dificuldade de separação clara** entre as classes.  
+   - Isso sugere **alta sobreposição entre os grupos** no espaço das variáveis.  
+3. **Ruído e fronteiras irregulares:**  
+   - O KNN tende a criar fronteiras **não lineares e fragmentadas**, adaptando-se muito ao conjunto de treino (possível sobreajuste se `k` for muito baixo).  
 
 ---
 
-### 3.4 Divisão do Dataset
-O conjunto de dados foi dividido em:  
-- **Treino:** 80%  
-- **Teste:** 20%  
-
-Estratificado por nacionalidade para garantir representatividade.
+##  Interpretação
+- O modelo consegue capturar diferenças entre os níveis de risco, mas a grande quantidade de regiões pequenas e irregulares indica que os dados apresentam **forte mistura entre classes**.  
+- Isso reduz a capacidade de generalização do KNN, podendo levar a **erros de classificação em novos dados**.  
+- O fato da classe **"Low"** dominar sugere que ela pode estar **mais representada** ou **mais próxima das outras classes** no espaço de atributos.  
 
 ---
 
-### 3.5 Modelagem
-- **Modelo:** Decision Tree Classifier (`DecisionTreeClassifier`)  
-- **Hiperparâmetros:** `max_depth=5` e `random_state=42`  
+##  Conclusões
+1. O KNN foi capaz de identificar padrões e separar classes em múltiplas regiões, mas as fronteiras resultaram muito complexas.  
+2. O modelo pode estar sofrendo de **overfitting** devido a um valor de `k` baixo.  
+3. Embora a classe "Low" tenha maior área de decisão, há **ambiguidade considerável** entre "High" e "Medium".  
 
 ---
 
-### 3.6 Visualização da Árvore
-A árvore de decisão foi gerada utilizando **Matplotlib**, com:  
-- Nó preenchido (`filled=True`) para facilitar interpretação.  
-- Bordas arredondadas (`rounded=True`).  
-- `figsize=(40,20)` para melhor visualização.  
-
-A árvore foi exportada em **SVG**, pronta para inclusão em relatórios ou documentos HTML.
+##  Recomendações
+1. **Testar diferentes valores de `k`** (ex.: `k=5, 7, 11`) para suavizar as fronteiras e reduzir ruído.  
+2. **Aplicar validação cruzada** para avaliar o desempenho do modelo em diferentes partições do dataset.  
+3. **Incluir mais variáveis preditoras** (ex.: renda, histórico financeiro, escolaridade), que podem aumentar a separabilidade entre classes.  
+4. Comparar o KNN com outros modelos de classificação como **Logistic Regression, Random Forest ou SVM**, que podem lidar melhor com classes sobrepostos.  
 
 ---
 
-## 4. Pontos sobre a Árvore (Decision Tree)
-- **Nós de decisão:** Cada nó representa uma condição sobre uma feature, como “wins ≤ 0.35”. Permite ver quais variáveis são mais importantes para classificar a nacionalidade.  
-- **Folhas:** Mostram a classe final predita (nacionalidade) para o caminho percorrido. Cores indicam a classe predominante.  
-- **Importância das features:** As primeiras divisões (raiz da árvore) indicam as features mais relevantes, por exemplo: vitórias, pontos ou poles.  
-- **Perfis de pilotos:** Cada caminho da raiz até uma folha define um perfil típico de piloto daquela nacionalidade.  
-- **Distribuição de classes:** Nós totalmente coloridos representam folhas com classe predominante, enquanto nós mistos indicam áreas em que a classificação é menos clara.  
-- **Insights possíveis:**  
-  - Identificar padrões históricos de desempenho por nacionalidade.  
-  - Avaliar a relação entre vitórias, poles, pontos e nacionalidade.  
-  - Auxiliar na análise exploratória e decisões estratégicas com base no histórico de pilotos.  
+ **Resumo Final:**  
+O KNN conseguiu capturar padrões nos dados, mas apresentou **fronteiras fragmentadas e sobreposição significativa entre classes**, indicando a necessidade de ajustes no hiperparâmetro `k` e/ou adoção de modelos mais robustos.
 
----
-
-## 5. Resultados
-- A árvore gerada permitiu observar quais características foram mais relevantes na classificação da nacionalidade dos pilotos.  
-- Com `max_depth=5`, a árvore ficou **interpretável**, evitando complexidade excessiva.  
-
----
-
-## 6. Possíveis Melhorias
-1. Criar novas métricas, como razão de vitórias por corridas disputadas.  
-2. Ajustar hiperparâmetros do modelo para melhorar acurácia.  
-3. Testar outros modelos, como Random Forest ou Gradient Boosting.  
-4. Aplicar balanceamento de classes (ex.: SMOTE) para nacionalidades com poucos pilotos.  
-
----
-
-## 7. Conclusão
-O projeto demonstrou o processo completo de **pré-processamento, modelagem e visualização** de dados usando Python e ferramentas de ciência de dados. A árvore de decisão fornece insights visuais sobre como características dos pilotos influenciam na nacionalidade, sendo útil tanto para análise exploratória quanto para classificações automáticas.
-
-![Logo do Projeto](Figure_1.png)
+![Logo do Projeto](knn.png)
 
 
-```python exec="on" html="1"
---8<-- ".\docs\KNN\knn.py"
-```
