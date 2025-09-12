@@ -103,5 +103,5 @@ O projeto demonstrou o processo completo de **pré-processamento, modelagem e vi
 
 
 ```python exec="on" html="1"
---8<-- ".\docs\KNN\avaliação.py"
+--8<-- ".\docs\KNN\knn.py"
 ```
