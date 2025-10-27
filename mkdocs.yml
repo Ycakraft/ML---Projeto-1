@@ -142,5 +142,8 @@ nav:
   - Projeto: ./projeto/main.md
   - Atividades do Ycaro:
     - Decision Tree: ./Decision Tree/main.md
-    - Knn: ./KNN/main.md
-    Knn: ./K-Mean/main.md
+    - KNN: ./KNN/main.md
+    - K-Mean: ./K-Mean/main.md
+    - Random Forest: ./Random Forest/main.md
+
+    
