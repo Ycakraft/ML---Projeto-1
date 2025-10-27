@@ -143,3 +143,4 @@ nav:
   - Atividades do Ycaro:
     - Decision Tree: ./Decision Tree/main.md
     - Knn: ./KNN/main.md
+    Knn: ./K-Mean/main.md
