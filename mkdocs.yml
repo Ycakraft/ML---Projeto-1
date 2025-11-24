@@ -1,43 +1,30 @@
 site_name: Entrega
 site_author: Ycakraft
-# site_url: https://hsandmann.github.io/documentation.template
-repo_url: ttps://github.com/Ycakraft/Machine-Learning---Atividades
+repo_url: https://github.com/Ycakraft/Portfolio-de-Machine-Learning
 repo_name: Machine-Learning---Atividades
-
 
 theme:
   name: material
   palette:
-    # primary: grey
-    # Light mode
+    # --- PALETA ATUALIZADA ---
+
+    # Paleta para o Modo Escuro (Padrão)
+    - scheme: slate
+      primary: black      # Header e navegação em preto profundo
+      accent: orange      # Cor de destaque vibrante
+      toggle:
+        icon: material/brightness-7 # Ícone de Sol
+        name: Mudar para modo claro
+
+    # Modo Claro (Opcional)
     - scheme: default
-      primary: grey
+      primary: white      # Fundo branco para o modo claro
+      accent: orange      # MANTÉM O LARANJA para consistência da marca
       toggle:
-        icon: material/toggle-switch-off-outline
-        name: Switch to dark mode
+        icon: material/brightness-4 # Ícone de Lua
+        name: Mudar para modo escuro
+    # --- FIM DA PALETA ---
 
-    # Palette toggle for automatic mode
-    - media: "(prefers-color-scheme)"
-      primary: grey
-      toggle:
-        icon: material/toggle-switch
-        name: Switch to light mode
-
-    # Palette toggle for light mode
-    - media: "(prefers-color-scheme: light)"
-      scheme: default 
-      primary: grey
-      toggle:
-        icon: material/toggle-switch-off-outline
-        name: Switch to dark mode
-
-    # Palette toggle for dark mode
-    - media: "(prefers-color-scheme: dark)"
-      primary: grey
-      scheme: slate
-      toggle:
-        icon: material/toggle-switch
-        name: Switch to system preference
   features:
     - content.code.copy
     - content.code.select
@@ -49,21 +36,31 @@ theme:
     - navigation.path
     - navigation.tracking
     - navigation.expand
+    
+    # --- 🚀 RECURSOS FUTURISTAS ---
+    - navigation.tabs           # <--- NOVO: Navegação principal em Abas
+    - navigation.tabs.sticky    # <--- NOVO: Fixa as abas no topo
+    - header.autohide           # <--- NOVO: Esconde o header ao rolar
+    - navigation.prune          # <--- NOVO: Limpa a sidebar (menu lateral)
+    - toc.follow                # <--- NOVO: Acompanha a rolagem no índice
+    
   icon:
-    # logo: assets/images/devops
+    logo: material/alpha-y-box-outline # <--- NOVO: Logo "Y" (de YC)
+    
+    # --- ÍCONES MAIS BONITOS (Material) ---
     admonition:
-      note: fontawesome/solid/note-sticky
-      abstract: fontawesome/solid/book
-      info: fontawesome/solid/circle-info
-      tip: fontawesome/solid/bullhorn
-      success: fontawesome/solid/check
-      question: fontawesome/solid/circle-question
-      warning: fontawesome/solid/triangle-exclamation
-      failure: fontawesome/solid/bomb
-      danger: fontawesome/solid/skull
-      bug: fontawesome/solid/robot
-      example: fontawesome/solid/flask
-      quote: fontawesome/solid/quote-left
+      note: material/note-outline
+      abstract: material/text-search
+      info: material/information-outline
+      tip: material/lightbulb-outline
+      success: material/check-circle-outline
+      question: material/help-circle-outline
+      warning: material/alert-outline
+      failure: material/close-circle-outline
+      danger: material/skull-outline
+      bug: material/bug-outline
+      example: material/beaker-outline
+      quote: material/format-quote-open-outline
 
 markdown_extensions:
   - admonition
@@ -95,7 +92,7 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.tasklist:
-      custom_checkbox: true  
+      custom_checkbox: true   
   - footnotes
   - pymdownx.critic
   - pymdownx.caret
@@ -131,19 +128,20 @@ extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
   - https://fastly.jsdelivr.net/npm/jquery/dist/jquery.min.js
   - https://fastly.jsdelivr.net/npm/echarts/dist/echarts.min.js
+  - https://unpkg.com/aos@next/dist/aos.js 
+  - assets/js/init_aos.js
+  - https://unpkg.com/aos@next/dist/aos.css
+
+
+  
 
 nav:
   - Home: index.md
-  - Roteiros:
-    - Roteiro 1: ./roteiro 1/main.md
-    - Roteiro 2: ./roteiro 2/main.md
-    - Roteiro 3: ./roteiro 3/main.md
-    - Roteiro 4: ./roteiro 4/main.md
   - Projeto: ./projeto/main.md
   - Atividades do Ycaro:
     - Decision Tree: ./Decision Tree/main.md
     - KNN: ./KNN/main.md
     - K-Mean: ./K-Mean/main.md
     - Random Forest: ./Random Forest/main.md
-
-    
+    - Pyspark: ./Pyspark/main.md
+    - Page Rank: ./Page Rank/main.md
